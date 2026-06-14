@@ -357,7 +357,7 @@ function ContactForm({ t, services }: { t: FormDict; services: ReadonlyArray<{ t
 
   if (sent) {
     return (
-      <div className="reveal reveal-delay-2 bg-white p-8 flex flex-col items-center justify-center gap-4 text-center min-h-[280px]">
+      <div className="bg-white p-8 flex flex-col items-center justify-center gap-4 text-center min-h-[280px] fade-up">
         <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-3xl">✓</div>
         <p className="font-display font-bold text-navy text-xl uppercase tracking-wide">{t.form.thanks}</p>
         <button
