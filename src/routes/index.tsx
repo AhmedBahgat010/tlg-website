@@ -20,6 +20,8 @@ export const Route = createFileRoute("/")({
       },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
     ],
+    //  
+
     links: [
       {
         rel: "stylesheet",
@@ -31,6 +33,7 @@ export const Route = createFileRoute("/")({
 });
 
 /* ─────── i18n ─────── */
+
 type Lang = "en" | "ar" | "zh";
 
 const dict = {
