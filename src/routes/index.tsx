@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import holoCity from "@/assets/holo-city.jpg";
-import tlgLogo from "@/assets/tlg-logo.png.asset.json";
+
+const tlgLogoUrl = "/tlg-logo.png";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -494,7 +496,7 @@ function Index() {
       {/* NAV */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white flex items-center justify-between px-[5%] h-[70px] shadow-[0_2px_12px_rgba(0,0,0,0.15)] border-b-[3px] border-orange">
         <a href="#home" className="flex items-center gap-3">
-          <img src={tlgLogo.url} alt="TLG logo" className="h-10 w-auto" />
+          <img src={tlgLogoUrl} alt="TLG logo" className="h-10 w-auto" />
         </a>
         <ul className="hidden md:flex gap-6 list-none items-center">
           {[
