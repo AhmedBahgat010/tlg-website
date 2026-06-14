@@ -321,6 +321,107 @@ function HoloConstellation() {
   );
 }
 
+/* ─────── ContactForm ─────── */
+const WHATSAPP_NUMBER = "201553654326"; // Egypt country code 20 + number without leading 0
+
+type FormDict = {
+  form: { name: string; company: string; email: string; phone: string; type: string; msg: string; send: string; thanks: string };
+};
+
+function ContactForm({ t, services }: { t: FormDict; services: ReadonlyArray<{ title: string }> }) {
+  const [name, setName] = useState("");
+  const [company, setCompany] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [projectType, setProjectType] = useState("");
+  const [message, setMessage] = useState("");
+  const [sent, setSent] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const lines = [
+      `👤 ${t.form.name.replace(" *", "")}: ${name}`,
+      company ? `🏢 ${t.form.company}: ${company}` : null,
+      `✉️ ${t.form.email.replace(" *", "")}: ${email}`,
+      phone ? `📞 ${t.form.phone}: ${phone}` : null,
+      projectType ? `🏗️ ${t.form.type}: ${projectType}` : null,
+      message ? `📝 ${message}` : null,
+    ].filter(Boolean).join("\n");
+
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+    setSent(true);
+  };
+
+  if (sent) {
+    return (
+      <div className="reveal reveal-delay-2 bg-white p-8 flex flex-col items-center justify-center gap-4 text-center min-h-[280px]">
+        <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-3xl">✓</div>
+        <p className="font-display font-bold text-navy text-xl uppercase tracking-wide">{t.form.thanks}</p>
+        <button
+          onClick={() => setSent(false)}
+          className="text-orange underline text-sm font-display tracking-wide"
+        >
+          ←
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <form className="reveal reveal-delay-2 bg-white p-8 space-y-4" onSubmit={handleSubmit}>
+      <div className="grid sm:grid-cols-2 gap-4">
+        <input
+          required
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder={t.form.name}
+          className="w-full border border-light-grey px-4 py-3 focus:outline-none focus:border-orange transition-colors"
+        />
+        <input
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
+          placeholder={t.form.company}
+          className="w-full border border-light-grey px-4 py-3 focus:outline-none focus:border-orange transition-colors"
+        />
+      </div>
+      <div className="grid sm:grid-cols-2 gap-4">
+        <input
+          required
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder={t.form.email}
+          className="w-full border border-light-grey px-4 py-3 focus:outline-none focus:border-orange transition-colors"
+        />
+        <input
+          type="tel"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          placeholder={t.form.phone}
+          className="w-full border border-light-grey px-4 py-3 focus:outline-none focus:border-orange transition-colors"
+        />
+      </div>
+      <select
+        value={projectType}
+        onChange={(e) => setProjectType(e.target.value)}
+        className="w-full border border-light-grey px-4 py-3 focus:outline-none focus:border-orange transition-colors text-mid-grey"
+      >
+        <option value="" disabled>{t.form.type}</option>
+        {services.map((s) => (<option key={s.title} value={s.title}>{s.title}</option>))}
+      </select>
+      <textarea
+        rows={5}
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        placeholder={t.form.msg}
+        className="w-full border border-light-grey px-4 py-3 focus:outline-none focus:border-orange transition-colors resize-none"
+      />
+      <button type="submit" className="btn-primary w-full justify-center">{t.form.send}</button>
+    </form>
+  );
+}
+
 /* ─────── Page ─────── */
 function Index() {
   const [lang, setLang] = useState<Lang>("en");
@@ -631,22 +732,7 @@ function Index() {
                 </div>
               ))}
             </div>
-            <form className="reveal reveal-delay-2 bg-white p-8 space-y-4" onSubmit={(e) => { e.preventDefault(); alert(t.contact.form.thanks); }}>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <input required placeholder={t.contact.form.name} className="w-full border border-light-grey px-4 py-3 focus:outline-none focus:border-orange transition-colors" />
-                <input placeholder={t.contact.form.company} className="w-full border border-light-grey px-4 py-3 focus:outline-none focus:border-orange transition-colors" />
-              </div>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <input required type="email" placeholder={t.contact.form.email} className="w-full border border-light-grey px-4 py-3 focus:outline-none focus:border-orange transition-colors" />
-                <input type="tel" placeholder={t.contact.form.phone} className="w-full border border-light-grey px-4 py-3 focus:outline-none focus:border-orange transition-colors" />
-              </div>
-              <select defaultValue="" className="w-full border border-light-grey px-4 py-3 focus:outline-none focus:border-orange transition-colors text-mid-grey">
-                <option value="" disabled>{t.contact.form.type}</option>
-                {services.map((s) => (<option key={s.title}>{s.title}</option>))}
-              </select>
-              <textarea rows={5} placeholder={t.contact.form.msg} className="w-full border border-light-grey px-4 py-3 focus:outline-none focus:border-orange transition-colors resize-none" />
-              <button type="submit" className="btn-primary w-full justify-center">{t.contact.form.send}</button>
-            </form>
+            <ContactForm t={t.contact} services={services} />
           </div>
         </div>
       </section>
