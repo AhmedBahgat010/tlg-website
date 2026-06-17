@@ -561,3 +561,69 @@
     opacity: 1;
   }
 }
+
+/* ── Project Image Slider ── */
+.project-slider {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Arrow buttons */
+.slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(13, 35, 64, 0.55);
+  color: #fff;
+  font-size: 22px;
+  line-height: 1;
+  border: none;
+  cursor: pointer;
+  border-radius: 0;
+  backdrop-filter: blur(4px);
+  transition: background 0.2s ease, transform 0.2s ease;
+  opacity: 1;
+}
+
+.slider-arrow:hover {
+  background: var(--orange);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.slider-arrow-left {
+  left: 8px;
+}
+
+.slider-arrow-right {
+  right: 8px;
+}
+
+/* Dot indicators */
+.slider-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.25s ease;
+  padding: 0;
+}
+
+.slider-dot-active {
+  background: var(--orange);
+  transform: scale(1.35);
+}
+
+.slider-dot-inactive {
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.slider-dot-inactive:hover {
+  background: rgba(255, 255, 255, 0.85);
+}

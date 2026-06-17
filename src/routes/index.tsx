@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import holoCity from "@/assets/holo-city.jpg";
 
 const tlgLogoUrl = "/tlg-logo.png";
@@ -186,15 +186,44 @@ const servicesByLang = {
   ],
 } as const;
 
-const projectImages = [
-  "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=80",
-  "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80",
-  "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200&q=80",
-  "https://images.unsplash.com/photo-1517089596392-fb9a9033e05b?w=1200&q=80",
-  "https://images.unsplash.com/photo-1581094271901-8022df4466f9?w=1200&q=80",
-  "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=1200&q=80",
-  "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80",
-  "https://images.unsplash.com/photo-1604871000636-074fa5117945?w=1200&q=80",
+/**
+ * ── Project Images ──────────────────────────────────────────────────────────
+ * كل مشروع له 3 صور. الصور اتحطت في:
+ *   public/projects/p1/1.jpg  public/projects/p1/2.jpg  public/projects/p1/3.jpg
+ *   public/projects/p2/1.jpg  ... وهكذا لكل المشاريع (p1 → p8)
+ *
+ * لو مش عندك صور حقيقية لسه، الكود هيعرض صور Unsplash كـ fallback تلقائياً.
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
+const projectImages: string[][] = [
+  // p1 – Chinese Accommodation – CBD
+  ["/projects/p1/1.jpg", "/projects/p1/2.jpg", "/projects/p1/3.jpg"],
+  // p2 – C05 Tower
+  ["/projects/p2/1.jpg", "/projects/p2/2.jpg", "/projects/p2/3.jpg"],
+  // p3 – C07 & C08 Towers Facades
+  ["/projects/p3/1.jpg", "/projects/p3/2.jpg", "/projects/p3/3.jpg"],
+  // p4 – D02 Tower
+  ["/projects/p4/1.jpg", "/projects/p4/2.jpg", "/projects/p4/3.jpg"],
+  // p5 – Regenco Glass Factory
+  ["/projects/p5/1.jpg", "/projects/p5/2.jpg", "/projects/p5/3.jpg"],
+  // p6 – EUP Factory
+  ["/projects/p6/1.jpg", "/projects/p6/2.jpg", "/projects/p6/3.jpg"],
+  // p7 – TEDA VIP Hall
+  ["/projects/p7/1.jpg", "/projects/p7/2.jpg", "/projects/p7/3.jpg"],
+  // p8 – TEDA Conference Hall
+  ["/projects/p8/1.jpg", "/projects/p8/2.jpg", "/projects/p8/3.jpg"],
+];
+
+/** Unsplash fallbacks per project (shown if local images don't exist yet) */
+const fallbackImages: string[][] = [
+  ["https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&q=80", "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=80", "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=900&q=80"],
+  ["https://images.unsplash.com/photo-1517089596392-fb9a9033e05b?w=900&q=80", "https://images.unsplash.com/photo-1581094271901-8022df4466f9?w=900&q=80", "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=900&q=80"],
+  ["https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=80", "https://images.unsplash.com/photo-1604871000636-074fa5117945?w=900&q=80", "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&q=80"],
+  ["https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=80", "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=900&q=80", "https://images.unsplash.com/photo-1517089596392-fb9a9033e05b?w=900&q=80"],
+  ["https://images.unsplash.com/photo-1581094271901-8022df4466f9?w=900&q=80", "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=900&q=80", "https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=80"],
+  ["https://images.unsplash.com/photo-1604871000636-074fa5117945?w=900&q=80", "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&q=80", "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=80"],
+  ["https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=900&q=80", "https://images.unsplash.com/photo-1517089596392-fb9a9033e05b?w=900&q=80", "https://images.unsplash.com/photo-1581094271901-8022df4466f9?w=900&q=80"],
+  ["https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=900&q=80", "https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=80", "https://images.unsplash.com/photo-1604871000636-074fa5117945?w=900&q=80"],
 ];
 
 const projectsByLang = {
@@ -250,6 +279,123 @@ const whyByLang = {
     { n: "04", title: "安全至上文化", text: "全过程嵌入的HSE管理体系，零伤害是底线。" },
   ],
 } as const;
+
+/* ─────── ProjectSlider component ─────── */
+
+function ProjectSlider({
+  images,
+  fallbacks,
+  title,
+  autoPlay = false,
+  height = "h-48",
+}: {
+  images: string[];
+  fallbacks: string[];
+  title: string;
+  autoPlay?: boolean;
+  height?: string;
+}) {
+  const [current, setCurrent] = useState(0);
+  const [failed, setFailed] = useState<boolean[]>(() => new Array(images.length).fill(false));
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const getSrc = (idx: number) =>
+    failed[idx] ? fallbacks[idx] ?? fallbacks[0] : images[idx];
+
+  const goTo = useCallback((idx: number) => {
+    setCurrent(idx);
+  }, []);
+
+  const prev = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      setCurrent((c) => (c - 1 + images.length) % images.length);
+    },
+    [images.length],
+  );
+
+  const next = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      setCurrent((c) => (c + 1) % images.length);
+    },
+    [images.length],
+  );
+
+  useEffect(() => {
+    if (!autoPlay) return;
+    timerRef.current = setInterval(() => {
+      setCurrent((c) => (c + 1) % images.length);
+    }, 3500);
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, [autoPlay, images.length]);
+
+  return (
+    <div className={`project-slider relative ${height} overflow-hidden bg-light-grey`}>
+      {/* Slides */}
+      {images.map((_, idx) => (
+        <img
+          key={idx}
+          src={getSrc(idx)}
+          alt={idx === 0 ? title : ""}
+          aria-hidden={idx !== current}
+          loading="lazy"
+          onError={() =>
+            setFailed((prev) => {
+              const next = [...prev];
+              next[idx] = true;
+              return next;
+            })
+          }
+          className={`absolute inset-0 w-full h-full object-cover transition-[opacity,transform] duration-700 ease-in-out ${
+            idx === current
+              ? "opacity-100 scale-[1.03] z-[1]"
+              : "opacity-0 scale-100 z-0"
+          }`}
+        />
+      ))}
+
+      {/* Dark gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/80 to-transparent z-[2] pointer-events-none" />
+
+      {/* Prev / Next arrows */}
+      {images.length > 1 && (
+        <>
+          <button
+            onClick={prev}
+            className="slider-arrow slider-arrow-left"
+            aria-label="Previous image"
+          >
+            ‹
+          </button>
+          <button
+            onClick={next}
+            className="slider-arrow slider-arrow-right"
+            aria-label="Next image"
+          >
+            ›
+          </button>
+        </>
+      )}
+
+      {/* Dot indicators */}
+      {images.length > 1 && (
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-[3]">
+          {images.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={(e) => { e.stopPropagation(); goTo(idx); }}
+              aria-label={`Go to image ${idx + 1}`}
+              className={`slider-dot ${
+                idx === current ? "slider-dot-active" : "slider-dot-inactive"
+              }`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 /* ─────── hooks/components ─────── */
 
@@ -538,7 +684,7 @@ function Index() {
           <span className="w-3 h-3 rounded-full bg-orange pulse-dot" /> {t.hero.badge}
         </div>
         <div className="relative h-full max-w-6xl mx-auto px-6 flex flex-col justify-center">
-          <p className="fade-up text-orange font-display tracking-[3px] uppercase text-sm mb-6" style={{ animationDelay: "0.05s" }}>{t.hero.tag}</p>
+          <p className="fade-up text-orange font-display tracking-[3px] uppercase text-base mb-6" style={{ animationDelay: "0.05s" }}>{t.hero.tag}</p>
           <h1 className={`font-display font-extrabold text-white text-[64px] sm:text-[88px] md:text-[120px] uppercase tracking-tight ${isRTL ? "leading-[1.3] rtl-hero" : "leading-[0.95]"}`}>
             <span className={`hero-line l1${isRTL ? " hero-line-rtl" : ""}`}>{t.hero.l1}</span>
             <span className={`hero-line l2 egypt-underline${isRTL ? " hero-line-rtl" : ""}`}>{t.hero.l2}</span>
@@ -550,7 +696,7 @@ function Index() {
             <a href="#contact" className="btn-outline">{t.hero.cta2}</a>
           </div>
         </div>
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/60 text-xs font-display tracking-widest uppercase flex flex-col items-center gap-2">
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/60 text-sm font-display tracking-widest uppercase flex flex-col items-center gap-2">
           {t.hero.scroll}<span className="w-px h-10 bg-white/40 animate-pulse" />
         </div>
       </section>
@@ -633,17 +779,22 @@ function Index() {
                 onClick={() => setOpenIdx(i)}
                 className={`reveal reveal-delay-${(i % 3) + 1} lift-card bg-white text-left relative overflow-hidden flex flex-col group`}
               >
-                <div className="relative h-48 overflow-hidden bg-light-grey">
-                  <img src={projectImages[i]} alt={p.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/80 to-transparent" />
-                  <span className="absolute top-3 left-3 inline-block bg-orange text-white text-[11px] font-display font-bold tracking-wider uppercase px-3 py-1">{p.tag}</span>
+                <div className="relative overflow-hidden">
+                  <ProjectSlider
+                    images={projectImages[i]}
+                    fallbacks={fallbackImages[i]}
+                    title={p.title}
+                    height="h-52"
+                    autoPlay
+                  />
+                  <span className="absolute top-3 left-3 inline-block bg-orange text-white text-[13px] font-display font-bold tracking-wider uppercase px-3 py-1 z-[4]">{p.tag}</span>
                 </div>
                 <div className="p-7 flex-1 flex flex-col">
                   <h3 className="font-display font-bold text-navy text-lg uppercase tracking-wide mb-3 leading-tight">{p.title}</h3>
                   <p className="text-mid-grey text-sm leading-relaxed whitespace-pre-line mb-4 flex-1">{p.text}</p>
                   <div className="text-xs font-display tracking-wider uppercase text-orange border-t pt-3 border-light-grey flex justify-between items-center">
                     <span>{p.meta}</span>
-                    <span className="text-navy group-hover:text-orange transition-colors">{t.projectsSec.viewMore}</span>
+                    <span className="text-navy group-hover:text-orange transition-colors cursor-pointer text-sm">{t.projectsSec.viewMore}</span>
                   </div>
                 </div>
               </button>
@@ -668,10 +819,15 @@ function Index() {
               className="absolute top-3 right-3 z-10 w-10 h-10 grid place-items-center bg-navy text-white hover:bg-orange transition-colors font-bold text-lg"
               aria-label={t.projectsSec.close}
             >✕</button>
-            <div className="relative h-72 overflow-hidden">
-              <img src={projectImages[openIdx]} alt={selected.title} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/90 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6">
+            <div className="relative overflow-hidden">
+              <ProjectSlider
+                images={projectImages[openIdx]}
+                fallbacks={fallbackImages[openIdx]}
+                title={selected.title}
+                autoPlay
+                height="h-80"
+              />
+              <div className="absolute bottom-0 left-0 right-0 p-6 z-[4] pointer-events-none">
                 <span className="inline-block bg-orange text-white text-[11px] font-display font-bold tracking-wider uppercase px-3 py-1 mb-3">{selected.tag}</span>
                 <h3 className="font-display font-extrabold text-white text-2xl md:text-3xl uppercase">{selected.title}</h3>
               </div>
