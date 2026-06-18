@@ -77,6 +77,7 @@ const dict = {
       form: { name: "Full Name *", company: "Company Name", email: "Email Address *", phone: "Phone Number", type: "Project Type", msg: "Tell us about your project — location, scope, timeline, and budget...", send: "Send Enquiry →", thanks: "Thank you — we'll be in touch shortly." },
     },
     footer: "© 2024 Tong Long Group for Construction Engineering · All Rights Reserved · Cairo, Egypt",
+    sponsors: { kicker: "Our Partners", title: "Trusted By Industry Leaders" },
   },
   ar: {
     nav: { about: "من نحن", services: "خدماتنا", projects: "مشاريعنا", why: "لماذا TLG", contact: "تواصل معنا" },
@@ -116,6 +117,7 @@ const dict = {
       form: { name: "الاسم الكامل *", company: "اسم الشركة", email: "البريد الإلكتروني *", phone: "رقم الهاتف", type: "نوع المشروع", msg: "أخبرنا عن مشروعك — الموقع، النطاق، الجدول الزمني، والميزانية...", send: "إرسال الاستفسار ←", thanks: "شكراً — سنتواصل معك قريباً." },
     },
     footer: "© 2024 مجموعة تونغ لونغ لهندسة الإنشاءات · جميع الحقوق محفوظة · القاهرة، مصر",
+    sponsors: { kicker: "شركاؤنا", title: "شركاء النجاح والجهات الداعمة" },
   },
   zh: {
     nav: { about: "关于我们", services: "服务", projects: "项目", why: "为何选 TLG", contact: "联系我们" },
@@ -155,6 +157,7 @@ const dict = {
       form: { name: "姓名 *", company: "公司名称", email: "电子邮箱 *", phone: "电话号码", type: "项目类型", msg: "请告诉我们您的项目 — 地点、范围、时间表和预算……", send: "发送询问 →", thanks: "谢谢 — 我们会尽快与您联系。" },
     },
     footer: "© 2024 通隆建筑工程集团 · 版权所有 · 埃及开罗",
+    sponsors: { kicker: "合作伙伴", title: "值得信赖的行业先锋" },
   },
 } as const;
 
@@ -570,6 +573,124 @@ function ContactForm({ t, services }: { t: FormDict; services: ReadonlyArray<{ t
   );
 }
 
+const sponsorLogos = [
+  "/projects/Sponsors/1.jpg",
+  "/projects/Sponsors/1577699349749.jpeg",
+  "/projects/Sponsors/16iu6pgY_400x400.jpg",
+  "/projects/Sponsors/Alamal-Alsharif-Final-Logo-v1.png",
+  "/projects/Sponsors/BR@4x-300x181.jpg",
+  "/projects/Sponsors/Sinoma-cdi-Egypt-46057-1569154362.jpg",
+  "/projects/Sponsors/Untitled.png",
+  "/projects/Sponsors/WhatsApp%20Image%202023-05-09%20at%207.37.05%20PM.jpeg",
+  "/projects/Sponsors/clogo_2025-05-21-10-15-07_W3pX7nl84KgtygAkTJbucQXX.jpg",
+  "/projects/Sponsors/images.png",
+  "/projects/Sponsors/imagess.png",
+  "/projects/Sponsors/kessel-ag-vector-logo.png",
+  "/projects/Sponsors/pne.png",
+  "/projects/Sponsors/regenco-glass-mirror-manufacturer-v1.jpg",
+  "/projects/Sponsors/screenshot-20251110-130842.png",
+  "/projects/Sponsors/screenshot-20251110-133040.png",
+  "/projects/Sponsors/xinxing-ductile-iron-pipes-co-ltd-47258.jpg"
+];
+
+function SponsorsMarquee() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isDown, setIsDown] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeftState, setScrollLeftState] = useState(0);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    let animationFrameId: number;
+    let lastTime = performance.now();
+    const speed = 0.05; // pixels per millisecond
+
+    const scroll = (time: number) => {
+      if (!isDown) {
+        const delta = time - lastTime;
+        container.scrollLeft += speed * delta;
+        
+        // Loop back seamlessly using one third of the scroll width (since we have 3 copies)
+        const oneThirdWidth = container.scrollWidth / 3;
+        if (container.scrollLeft >= oneThirdWidth) {
+          container.scrollLeft -= oneThirdWidth;
+        }
+      }
+      lastTime = time;
+      animationFrameId = requestAnimationFrame(scroll);
+    };
+
+    animationFrameId = requestAnimationFrame(scroll);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [isDown]);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    const container = containerRef.current;
+    if (!container) return;
+    setIsDown(true);
+    setStartX(e.pageX - container.offsetLeft);
+    setScrollLeftState(container.scrollLeft);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDown(false);
+  };
+
+  const handleMouseUp = () => {
+    setIsDown(false);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const container = containerRef.current;
+    if (!container) return;
+    const x = e.pageX - container.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    
+    let newScrollLeft = scrollLeftState - walk;
+    const oneThirdWidth = container.scrollWidth / 3;
+    if (newScrollLeft >= oneThirdWidth) {
+      newScrollLeft -= oneThirdWidth;
+    } else if (newScrollLeft < 0) {
+      newScrollLeft += oneThirdWidth;
+    }
+    container.scrollLeft = newScrollLeft;
+  };
+
+  return (
+    <div
+      ref={containerRef}
+      onMouseDown={handleMouseDown}
+      onMouseLeave={handleMouseLeave}
+      onMouseUp={handleMouseUp}
+      onMouseMove={handleMouseMove}
+      className="relative w-full overflow-x-auto scrollbar-none py-4 select-none cursor-grab active:cursor-grabbing flex gap-12"
+      dir="ltr"
+    >
+      {Array.from({ length: 3 }).map((_, listIdx) => (
+        <div key={listIdx} className="flex gap-12 shrink-0 items-center">
+          {sponsorLogos.map((logo, idx) => (
+            <div
+              key={`${listIdx}-${idx}`}
+              className="h-20 w-40 flex items-center justify-center bg-white p-3 rounded-lg shadow-sm border border-navy/5 hover:border-orange/30 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 shrink-0 pointer-events-none"
+            >
+              <img
+                src={logo}
+                alt="Sponsor Logo"
+                className="max-h-full max-w-full object-contain"
+                draggable={false}
+              />
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 /* ─────── Page ─────── */
 function Index() {
   const [lang, setLang] = useState<Lang>("en");
@@ -617,6 +738,68 @@ function Index() {
     document.body.style.overflow = "hidden";
     return () => { window.removeEventListener("keydown", onKey); document.body.style.overflow = ""; };
   }, [openIdx]);
+
+  useEffect(() => {
+    let isDown = false;
+    let startY = 0;
+    let scrollTop = 0;
+
+    const handleMouseDown = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (
+        target.closest("button") ||
+        target.closest("a") ||
+        target.closest("input") ||
+        target.closest("textarea") ||
+        target.closest("select") ||
+        target.closest('[role="button"]') ||
+        target.closest("#sponsors")
+      ) {
+        return;
+      }
+      isDown = true;
+      document.body.classList.add("cursor-grabbing");
+      document.body.classList.remove("cursor-grab");
+      startY = e.pageY - document.documentElement.offsetTop;
+      scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    };
+
+    const handleMouseLeave = () => {
+      isDown = false;
+      document.body.classList.remove("cursor-grabbing");
+      document.body.classList.add("cursor-grab");
+    };
+
+    const handleMouseUp = () => {
+      isDown = false;
+      document.body.classList.remove("cursor-grabbing");
+      document.body.classList.add("cursor-grab");
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const y = e.pageY - document.documentElement.offsetTop;
+      const walk = (y - startY) * 1.5;
+      document.documentElement.scrollTop = scrollTop - walk;
+      document.body.scrollTop = scrollTop - walk;
+    };
+
+    document.body.classList.add("cursor-grab");
+
+    window.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mouseleave", handleMouseLeave);
+    window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      document.body.classList.remove("cursor-grab", "cursor-grabbing");
+      window.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mouseleave", handleMouseLeave);
+      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
 
   const langFontClass = useMemo(() => lang === "ar" ? "font-arabic" : lang === "zh" ? "font-cjk" : "", [lang]);
 
@@ -696,9 +879,6 @@ function Index() {
             <a href="#contact" className="btn-outline">{t.hero.cta2}</a>
           </div>
         </div>
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/60 text-sm font-display tracking-widest uppercase flex flex-col items-center gap-2">
-          {t.hero.scroll}<span className="w-px h-10 bg-white/40 animate-pulse" />
-        </div>
       </section>
 
       {/* STATS */}
@@ -741,6 +921,19 @@ function Index() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* SPONSORS */}
+      <section id="sponsors" className="py-16 px-6 md:px-[8%] bg-white overflow-hidden border-y border-light-grey">
+        <div className="max-w-6xl mx-auto">
+          <div className="reveal text-center flex flex-col items-center mb-10">
+            <p className="text-orange font-display tracking-[3px] uppercase text-sm">{t.sponsors.kicker}</p>
+            <h2 className="mt-4 font-display font-extrabold text-4xl md:text-5xl text-navy uppercase">{t.sponsors.title}</h2>
+            <div className="section-rule mx-auto" />
+          </div>
+          
+          <SponsorsMarquee />
         </div>
       </section>
 
