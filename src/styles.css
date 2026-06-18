@@ -636,10 +636,3 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-
-body.cursor-grab {
-  cursor: grab !important;
-}
-body.cursor-grabbing {
-  cursor: grabbing !important;
-}

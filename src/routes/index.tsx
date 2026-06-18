@@ -76,7 +76,7 @@ const dict = {
       hours: "Saturday – Thursday, 09:00 – 17:00",
       form: { name: "Full Name *", company: "Company Name", email: "Email Address *", phone: "Phone Number", type: "Project Type", msg: "Tell us about your project — location, scope, timeline, and budget...", send: "Send Enquiry →", thanks: "Thank you — we'll be in touch shortly." },
     },
-    footer: "© 2024 Tong Long Group for Construction Engineering · All Rights Reserved · Cairo, Egypt",
+    footer: "© 2019 Tong Long Group for Construction Engineering · All Rights Reserved · Cairo, Egypt",
     sponsors: { kicker: "Our Partners", title: "Trusted By Industry Leaders" },
   },
   ar: {
@@ -116,7 +116,7 @@ const dict = {
       hours: "السبت – الخميس، 09:00 – 17:00",
       form: { name: "الاسم الكامل *", company: "اسم الشركة", email: "البريد الإلكتروني *", phone: "رقم الهاتف", type: "نوع المشروع", msg: "أخبرنا عن مشروعك — الموقع، النطاق، الجدول الزمني، والميزانية...", send: "إرسال الاستفسار ←", thanks: "شكراً — سنتواصل معك قريباً." },
     },
-    footer: "© 2024 مجموعة تونغ لونغ لهندسة الإنشاءات · جميع الحقوق محفوظة · القاهرة، مصر",
+    footer: "© 2019 مجموعة تونغ لونغ لهندسة الإنشاءات · جميع الحقوق محفوظة · القاهرة، مصر",
     sponsors: { kicker: "شركاؤنا", title: "شركاء النجاح والجهات الداعمة" },
   },
   zh: {
@@ -156,7 +156,7 @@ const dict = {
       hours: "周六至周四，09:00 – 17:00",
       form: { name: "姓名 *", company: "公司名称", email: "电子邮箱 *", phone: "电话号码", type: "项目类型", msg: "请告诉我们您的项目 — 地点、范围、时间表和预算……", send: "发送询问 →", thanks: "谢谢 — 我们会尽快与您联系。" },
     },
-    footer: "© 2024 通隆建筑工程集团 · 版权所有 · 埃及开罗",
+    footer: "© 2019 通隆建筑工程集团 · 版权所有 · 埃及开罗",
     sponsors: { kicker: "合作伙伴", title: "值得信赖的行业先锋" },
   },
 } as const;
@@ -739,67 +739,6 @@ function Index() {
     return () => { window.removeEventListener("keydown", onKey); document.body.style.overflow = ""; };
   }, [openIdx]);
 
-  useEffect(() => {
-    let isDown = false;
-    let startY = 0;
-    let scrollTop = 0;
-
-    const handleMouseDown = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (
-        target.closest("button") ||
-        target.closest("a") ||
-        target.closest("input") ||
-        target.closest("textarea") ||
-        target.closest("select") ||
-        target.closest('[role="button"]') ||
-        target.closest("#sponsors")
-      ) {
-        return;
-      }
-      isDown = true;
-      document.body.classList.add("cursor-grabbing");
-      document.body.classList.remove("cursor-grab");
-      startY = e.pageY - document.documentElement.offsetTop;
-      scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    };
-
-    const handleMouseLeave = () => {
-      isDown = false;
-      document.body.classList.remove("cursor-grabbing");
-      document.body.classList.add("cursor-grab");
-    };
-
-    const handleMouseUp = () => {
-      isDown = false;
-      document.body.classList.remove("cursor-grabbing");
-      document.body.classList.add("cursor-grab");
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const y = e.pageY - document.documentElement.offsetTop;
-      const walk = (y - startY) * 1.5;
-      document.documentElement.scrollTop = scrollTop - walk;
-      document.body.scrollTop = scrollTop - walk;
-    };
-
-    document.body.classList.add("cursor-grab");
-
-    window.addEventListener("mousedown", handleMouseDown);
-    window.addEventListener("mouseleave", handleMouseLeave);
-    window.addEventListener("mouseup", handleMouseUp);
-    window.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      document.body.classList.remove("cursor-grab", "cursor-grabbing");
-      window.removeEventListener("mousedown", handleMouseDown);
-      window.removeEventListener("mouseleave", handleMouseLeave);
-      window.removeEventListener("mouseup", handleMouseUp);
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, []);
 
   const langFontClass = useMemo(() => lang === "ar" ? "font-arabic" : lang === "zh" ? "font-cjk" : "", [lang]);
 
@@ -970,7 +909,7 @@ function Index() {
               <button
                 key={p.title}
                 onClick={() => setOpenIdx(i)}
-                className={`reveal reveal-delay-${(i % 3) + 1} lift-card bg-white text-left relative overflow-hidden flex flex-col group`}
+                className={`reveal reveal-delay-${(i % 3) + 1} lift-card bg-white text-left relative overflow-hidden flex flex-col group cursor-pointer`}
               >
                 <div className="relative overflow-hidden">
                   <ProjectSlider
