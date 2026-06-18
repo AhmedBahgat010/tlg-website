@@ -806,7 +806,7 @@ function Index() {
           <span className="w-3 h-3 rounded-full bg-orange pulse-dot" /> {t.hero.badge}
         </div>
         <div className="relative h-full max-w-6xl mx-auto px-6 flex flex-col justify-center">
-          <p className="fade-up text-orange font-display tracking-[3px] uppercase text-base mb-6" style={{ animationDelay: "0.05s" }}>{t.hero.tag}</p>
+          <p className="fade-up text-orange font-display tracking-[3px] uppercase text-lg mb-6" style={{ animationDelay: "0.05s" }}>{t.hero.tag}</p>
           <h1 className={`font-display font-extrabold text-white text-[64px] sm:text-[88px] md:text-[120px] uppercase tracking-tight ${isRTL ? "leading-[1.3] rtl-hero" : "leading-[0.95]"}`}>
             <span className={`hero-line l1${isRTL ? " hero-line-rtl" : ""}`}>{t.hero.l1}</span>
             <span className={`hero-line l2 egypt-underline${isRTL ? " hero-line-rtl" : ""}`}>{t.hero.l2}</span>
