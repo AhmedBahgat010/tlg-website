@@ -350,11 +350,10 @@ function ProjectSlider({
               return next;
             })
           }
-          className={`absolute inset-0 w-full h-full object-cover transition-[opacity,transform] duration-700 ease-in-out ${
-            idx === current
+          className={`absolute inset-0 w-full h-full object-cover transition-[opacity,transform] duration-700 ease-in-out ${idx === current
               ? "opacity-100 scale-[1.03] z-[1]"
               : "opacity-0 scale-100 z-0"
-          }`}
+            }`}
         />
       ))}
 
@@ -389,9 +388,8 @@ function ProjectSlider({
               key={idx}
               onClick={(e) => { e.stopPropagation(); goTo(idx); }}
               aria-label={`Go to image ${idx + 1}`}
-              className={`slider-dot ${
-                idx === current ? "slider-dot-active" : "slider-dot-inactive"
-              }`}
+              className={`slider-dot ${idx === current ? "slider-dot-active" : "slider-dot-inactive"
+                }`}
             />
           ))}
         </div>
@@ -590,7 +588,7 @@ const sponsorLogos = [
   "/projects/Sponsors/regenco-glass-mirror-manufacturer-v1.jpg",
   "/projects/Sponsors/screenshot-20251110-130842.png",
   "/projects/Sponsors/screenshot-20251110-133040.png",
-  "/projects/Sponsors/xinxing-ductile-iron-pipes-co-ltd-47258.jpg"
+  "/projects/Sponsors/WhatsApp Image 2026-06-19 at 11.05.25.jpg"
 ];
 
 function SponsorsMarquee() {
@@ -611,7 +609,7 @@ function SponsorsMarquee() {
       if (!isDown) {
         const delta = time - lastTime;
         container.scrollLeft += speed * delta;
-        
+
         // Loop back seamlessly using one third of the scroll width (since we have 3 copies)
         const oneThirdWidth = container.scrollWidth / 3;
         if (container.scrollLeft >= oneThirdWidth) {
@@ -649,7 +647,7 @@ function SponsorsMarquee() {
     if (!container) return;
     const x = e.pageX - container.offsetLeft;
     const walk = (x - startX) * 1.5;
-    
+
     let newScrollLeft = scrollLeftState - walk;
     const oneThirdWidth = container.scrollWidth / 3;
     if (newScrollLeft >= oneThirdWidth) {
@@ -806,7 +804,8 @@ function Index() {
           <span className="w-3 h-3 rounded-full bg-orange pulse-dot" /> {t.hero.badge}
         </div>
         <div className="relative h-full max-w-6xl mx-auto px-6 flex flex-col justify-center">
-          <p className="fade-up text-orange font-display tracking-[3px] uppercase text-lg mb-6" style={{ animationDelay: "0.05s" }}>{t.hero.tag}</p>
+          {/* ── CHANGED: Hero tag — bigger, bolder, more prominent ── */}
+          <p className="fade-up text-orange font-display font-bold tracking-[2px] uppercase text-xl md:text-2xl mb-6" style={{ animationDelay: "0.05s" }}>{t.hero.tag}</p>
           <h1 className={`font-display font-extrabold text-white text-[64px] sm:text-[88px] md:text-[120px] uppercase tracking-tight ${isRTL ? "leading-[1.3] rtl-hero" : "leading-[0.95]"}`}>
             <span className={`hero-line l1${isRTL ? " hero-line-rtl" : ""}`}>{t.hero.l1}</span>
             <span className={`hero-line l2 egypt-underline${isRTL ? " hero-line-rtl" : ""}`}>{t.hero.l2}</span>
@@ -841,8 +840,9 @@ function Index() {
       <section id="about" className="py-24 px-6 md:px-[8%] bg-white">
         <div className="grid md:grid-cols-2 gap-16 max-w-6xl mx-auto items-start">
           <div className="reveal">
-            <p className="text-orange font-display tracking-[3px] uppercase text-sm">{t.about.kicker}</p>
-            <h2 className="mt-4 font-display font-extrabold text-5xl md:text-6xl text-navy uppercase leading-[0.95]">
+            {/* ── CHANGED: "Who We Are" kicker — larger, bolder ── */}
+            <p className="text-orange font-display font-bold tracking-[2px] uppercase text-base md:text-lg">{t.about.kicker}</p>
+            <h2 className="mt-4 font-display font-extrabold text-5xl md:text-6xl lg:text-7xl text-navy uppercase leading-[0.95]">
               {t.about.title.map((line, i) => (<span key={i}>{line}<br /></span>))}
             </h2>
             <div className="section-rule" />
@@ -867,11 +867,12 @@ function Index() {
       <section id="sponsors" className="py-16 px-6 md:px-[8%] bg-white overflow-hidden border-y border-light-grey">
         <div className="max-w-6xl mx-auto">
           <div className="reveal text-center flex flex-col items-center mb-10">
-            <p className="text-orange font-display tracking-[3px] uppercase text-sm">{t.sponsors.kicker}</p>
-            <h2 className="mt-4 font-display font-extrabold text-4xl md:text-5xl text-navy uppercase">{t.sponsors.title}</h2>
+            {/* ── CHANGED: sponsors kicker larger ── */}
+            <p className="text-orange font-display font-bold tracking-[2px] uppercase text-base md:text-lg">{t.sponsors.kicker}</p>
+            <h2 className="mt-4 font-display font-extrabold text-4xl md:text-5xl lg:text-6xl text-navy uppercase">{t.sponsors.title}</h2>
             <div className="section-rule mx-auto" />
           </div>
-          
+
           <SponsorsMarquee />
         </div>
       </section>
@@ -880,8 +881,9 @@ function Index() {
       <section id="services" className="py-24 px-6 md:px-[8%] bg-light-grey">
         <div className="max-w-6xl mx-auto">
           <div className="reveal">
-            <p className="text-orange font-display tracking-[3px] uppercase text-sm">{t.services.kicker}</p>
-            <h2 className="mt-4 font-display font-extrabold text-4xl md:text-5xl text-navy uppercase">{t.services.title}</h2>
+            {/* ── CHANGED: "What We Do" kicker — larger, bolder ── */}
+            <p className="text-orange font-display font-bold tracking-[2px] uppercase text-base md:text-lg">{t.services.kicker}</p>
+            <h2 className="mt-4 font-display font-extrabold text-4xl md:text-5xl lg:text-6xl text-navy uppercase">{t.services.title}</h2>
             <div className="section-rule" />
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
@@ -900,8 +902,9 @@ function Index() {
       <section id="projects" className="py-24 px-6 md:px-[8%] bg-navy-dark">
         <div className="max-w-6xl mx-auto">
           <div className="reveal">
-            <p className="text-orange font-display tracking-[3px] uppercase text-sm">{t.projectsSec.kicker}</p>
-            <h2 className="mt-4 font-display font-extrabold text-4xl md:text-5xl text-white uppercase">{t.projectsSec.title}</h2>
+            {/* ── CHANGED: "Our Work" kicker — larger, bolder ── */}
+            <p className="text-orange font-display font-bold tracking-[2px] uppercase text-base md:text-lg">{t.projectsSec.kicker}</p>
+            <h2 className="mt-4 font-display font-extrabold text-4xl md:text-5xl lg:text-6xl text-white uppercase">{t.projectsSec.title}</h2>
             <div className="section-rule" />
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
@@ -977,8 +980,9 @@ function Index() {
       <section id="why" className="py-24 px-6 md:px-[8%] bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="reveal">
-            <p className="text-orange font-display tracking-[3px] uppercase text-sm">{t.why.kicker}</p>
-            <h2 className="mt-4 font-display font-extrabold text-4xl md:text-5xl text-navy uppercase">{t.why.title}</h2>
+            {/* ── CHANGED: "Our Difference / Why TLG" kicker — larger, bolder ── */}
+            <p className="text-orange font-display font-bold tracking-[2px] uppercase text-base md:text-lg">{t.why.kicker}</p>
+            <h2 className="mt-4 font-display font-extrabold text-4xl md:text-5xl lg:text-6xl text-navy uppercase">{t.why.title}</h2>
             <div className="section-rule" />
           </div>
           <div className="grid md:grid-cols-2 gap-10 mt-10">
@@ -1000,8 +1004,9 @@ function Index() {
         <div className="absolute inset-0 blueprint-grid opacity-40" />
         <div className="max-w-6xl mx-auto relative">
           <div className="reveal">
-            <p className="text-orange font-display tracking-[3px] uppercase text-sm">{t.contact.kicker}</p>
-            <h2 className="mt-4 font-display font-extrabold text-4xl md:text-5xl text-white uppercase">{t.contact.title}</h2>
+            {/* ── CHANGED: contact kicker larger ── */}
+            <p className="text-orange font-display font-bold tracking-[2px] uppercase text-base md:text-lg">{t.contact.kicker}</p>
+            <h2 className="mt-4 font-display font-extrabold text-4xl md:text-5xl lg:text-6xl text-white uppercase">{t.contact.title}</h2>
             <div className="section-rule" />
           </div>
           <div className="grid md:grid-cols-2 gap-12 mt-10">
@@ -1038,7 +1043,7 @@ function Index() {
         aria-label="Contact on WhatsApp"
       >
         <svg viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
         </svg>
       </a>
     </div>
