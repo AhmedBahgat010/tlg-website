@@ -786,9 +786,8 @@ function Index() {
         </ul>
         <div className="md:hidden">{langSwitcher}</div>
       </nav>
-
       {/* HERO */}
-      <section id="home" className="relative mt-[70px] min-h-[640px] h-[calc(100vh-70px)] overflow-hidden bg-navy-dark">
+      <section id="home" className="relative mt-[70px] min-h-[400px] md:min-h-[440px] py-4 md:py-8 flex items-center overflow-hidden bg-navy-dark">
         <img src={holoCity} alt="" aria-hidden="true" width={1920} height={1080} className="absolute inset-0 w-full h-full object-cover opacity-70 holo-bg-zoom" />
         <div className="absolute inset-0 bg-gradient-to-r rtl:bg-gradient-to-l from-navy-dark/90 via-navy-dark/60 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/80 via-transparent to-navy-dark/40" />
@@ -800,11 +799,17 @@ function Index() {
           ))}
         </div>
         <div className="absolute -right-32 top-0 bottom-0 w-[280px] bg-orange/90 pointer-events-none z-0" style={{ clipPath: "polygon(40% 0, 100% 0, 100% 100%, 0 100%)" }} />
-        <div className={`absolute top-24 flex items-center gap-3 text-white/90 font-display tracking-widest text-xs z-10 ${isRTL ? "left-10 md:left-24 flex-row-reverse" : "right-10 md:right-24"}`} dir="ltr">
-          <span className="w-3 h-3 rounded-full bg-orange pulse-dot" /> {t.hero.badge}
-        </div>
-        <div className="relative z-10 h-full max-w-6xl mx-auto px-6 flex flex-col justify-center">
-          <p className="fade-up text-orange font-display font-bold tracking-[2px] uppercase text-xl md:text-2xl mb-6" style={{ animationDelay: "0.05s" }}>{t.hero.tag}</p>
+        <div className="relative z-10 w-full max-w-6xl mx-auto px-6 flex flex-col justify-center">
+          {/* Header Row: Slogan Tag + Active Badge */}
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 fade-up" style={{ animationDelay: "0.05s" }}>
+            <p className="text-orange font-display font-bold tracking-[2px] uppercase text-xl md:text-2xl">
+              {t.hero.tag}
+            </p>
+            <div className={`flex items-center gap-3 text-white/90 font-display tracking-widest text-xs shrink-0 ${isRTL ? "flex-row-reverse" : ""}`} dir="ltr">
+              <span className="w-3 h-3 rounded-full bg-orange pulse-dot" />
+              <span>{t.hero.badge}</span>
+            </div>
+          </div>
           <h1 className={`font-display font-extrabold text-white text-[64px] sm:text-[88px] md:text-[120px] uppercase tracking-tight ${isRTL ? "leading-[1.3] rtl-hero" : "leading-[0.95]"}`}>
             <span className={`hero-line l1${isRTL ? " hero-line-rtl" : ""}`}>{t.hero.l1}</span>
             <span className={`hero-line l2 egypt-underline${isRTL ? " hero-line-rtl" : ""}`}>{t.hero.l2}</span>
