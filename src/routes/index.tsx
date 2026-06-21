@@ -802,7 +802,7 @@ function Index() {
         <div className="relative z-10 w-full max-w-6xl mx-auto px-6 flex flex-col justify-center">
           {/* Header Row: Slogan Tag + Active Badge */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 fade-up" style={{ animationDelay: "0.05s" }}>
-            <p className="text-orange font-display font-bold tracking-[2px] uppercase text-xl md:text-2xl">
+            <p className="text-orange font-display font-bold tracking-[2px] uppercase text-2xl md:text-3xl">
               {t.hero.tag}
             </p>
             <div className={`flex items-center gap-3 text-white/90 font-display tracking-widest text-xs shrink-0 ${isRTL ? "flex-row-reverse" : ""}`} dir="ltr">
@@ -810,7 +810,7 @@ function Index() {
               <span>{t.hero.badge}</span>
             </div>
           </div>
-          <h1 className={`font-display font-extrabold text-white text-[64px] sm:text-[88px] md:text-[120px] uppercase tracking-tight ${isRTL ? "leading-[1.3] rtl-hero" : "leading-[0.95]"}`}>
+          <h1 className={`font-display font-extrabold text-white text-[54px] sm:text-[76px] md:text-[100px] uppercase tracking-tight ${isRTL ? "leading-[1.3] rtl-hero" : "leading-[0.95]"}`}>
             <span className={`hero-line l1${isRTL ? " hero-line-rtl" : ""}`}>{t.hero.l1}</span>
             <span className={`hero-line l2 egypt-underline${isRTL ? " hero-line-rtl" : ""}`}>{t.hero.l2}</span>
             <span className={`hero-line l3${isRTL ? " hero-line-rtl" : ""}`}>{t.hero.l3}</span>
