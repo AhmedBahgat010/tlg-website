@@ -351,8 +351,8 @@ function ProjectSlider({
             })
           }
           className={`absolute inset-0 w-full h-full object-cover transition-[opacity,transform] duration-700 ease-in-out ${idx === current
-              ? "opacity-100 scale-[1.03] z-[1]"
-              : "opacity-0 scale-100 z-0"
+            ? "opacity-100 scale-[1.03] z-[1]"
+            : "opacity-0 scale-100 z-0"
             }`}
         />
       ))}
@@ -588,7 +588,7 @@ const sponsorLogos = [
   "/projects/Sponsors/regenco-glass-mirror-manufacturer-v1.jpg",
   "/projects/Sponsors/screenshot-20251110-130842.png",
   "/projects/Sponsors/screenshot-20251110-133040.png",
-  "/projects/Sponsors/WhatsApp Image 2026-06-19 at 11.05.25.jpg"
+  "/projects/Sponsors/.jpg"
 ];
 
 function SponsorsMarquee() {
@@ -790,7 +790,7 @@ function Index() {
       {/* HERO */}
       <section id="home" className="relative mt-[70px] min-h-[640px] h-[calc(100vh-70px)] overflow-hidden bg-navy-dark">
         <img src={holoCity} alt="" aria-hidden="true" width={1920} height={1080} className="absolute inset-0 w-full h-full object-cover opacity-70 holo-bg-zoom" />
-        <div className="absolute inset-0 bg-gradient-to-r from-navy-dark/90 via-navy-dark/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r rtl:bg-gradient-to-l from-navy-dark/90 via-navy-dark/60 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/80 via-transparent to-navy-dark/40" />
         <HoloConstellation />
         <div className="holo-scan" />
@@ -799,12 +799,11 @@ function Index() {
             <span key={i} className="holo-particle" style={{ left: `${(i * 53) % 100}%`, bottom: `${(i * 37) % 60}%`, animationDelay: `${(i % 6) * 0.7}s`, animationDuration: `${6 + (i % 5)}s` }} />
           ))}
         </div>
-        <div className="absolute -right-32 top-0 bottom-0 w-[280px] bg-orange/90" style={{ clipPath: "polygon(40% 0, 100% 0, 100% 100%, 0 100%)" }} />
-        <div className={`absolute top-24 flex items-center gap-3 text-white/90 font-display tracking-widest text-xs ${isRTL ? "left-10 md:left-24 flex-row-reverse" : "right-10 md:right-24"}`} dir="ltr">
+        <div className="absolute -right-32 top-0 bottom-0 w-[280px] bg-orange/90 pointer-events-none z-0" style={{ clipPath: "polygon(40% 0, 100% 0, 100% 100%, 0 100%)" }} />
+        <div className={`absolute top-24 flex items-center gap-3 text-white/90 font-display tracking-widest text-xs z-10 ${isRTL ? "left-10 md:left-24 flex-row-reverse" : "right-10 md:right-24"}`} dir="ltr">
           <span className="w-3 h-3 rounded-full bg-orange pulse-dot" /> {t.hero.badge}
         </div>
-        <div className="relative h-full max-w-6xl mx-auto px-6 flex flex-col justify-center">
-          {/* ── CHANGED: Hero tag — bigger, bolder, more prominent ── */}
+        <div className="relative z-10 h-full max-w-6xl mx-auto px-6 flex flex-col justify-center">
           <p className="fade-up text-orange font-display font-bold tracking-[2px] uppercase text-xl md:text-2xl mb-6" style={{ animationDelay: "0.05s" }}>{t.hero.tag}</p>
           <h1 className={`font-display font-extrabold text-white text-[64px] sm:text-[88px] md:text-[120px] uppercase tracking-tight ${isRTL ? "leading-[1.3] rtl-hero" : "leading-[0.95]"}`}>
             <span className={`hero-line l1${isRTL ? " hero-line-rtl" : ""}`}>{t.hero.l1}</span>
@@ -840,10 +839,13 @@ function Index() {
       <section id="about" className="py-24 px-6 md:px-[8%] bg-white">
         <div className="grid md:grid-cols-2 gap-16 max-w-6xl mx-auto items-start">
           <div className="reveal">
-            {/* ── CHANGED: "Who We Are" kicker — larger, bolder ── */}
-            <p className="text-orange font-display font-bold tracking-[2px] uppercase text-base md:text-lg">{t.about.kicker}</p>
-            <h2 className="mt-4 font-display font-extrabold text-5xl md:text-6xl lg:text-7xl text-navy uppercase leading-[0.95]">
-              {t.about.title.map((line, i) => (<span key={i}>{line}<br /></span>))}
+            {/* Kicker: Large Orange */}
+            <p className="text-orange mt-4 font-display font-extrabold text-4xl md:text-5xl lg:text-6xl uppercase leading-none">
+              {t.about.kicker}
+            </p>
+            {/* Title: Small Navy */}
+            <h2 className="font-display font-normal uppercase text-[1.8rem] md:text-[2.4rem] lg:text-[2.9rem] text-navy tracking-normal leading-tight mt-2">
+              {t.about.title.join(" ")}
             </h2>
             <div className="section-rule" />
             <p className="text-mid-grey leading-relaxed mb-4">{t.about.p1}</p>
@@ -867,9 +869,14 @@ function Index() {
       <section id="sponsors" className="py-16 px-6 md:px-[8%] bg-white overflow-hidden border-y border-light-grey">
         <div className="max-w-6xl mx-auto">
           <div className="reveal text-center flex flex-col items-center mb-10">
-            {/* ── CHANGED: sponsors kicker larger ── */}
-            <p className="text-orange font-display font-bold tracking-[2px] uppercase text-base md:text-lg">{t.sponsors.kicker}</p>
-            <h2 className="mt-4 font-display font-extrabold text-4xl md:text-5xl lg:text-6xl text-navy uppercase">{t.sponsors.title}</h2>
+            {/* Kicker: Large Orange */}
+            <p className="text-orange mt-4 font-display font-extrabold text-4xl md:text-5xl lg:text-6xl uppercase leading-none">
+              {t.sponsors.kicker}
+            </p>
+            {/* Title: Small Navy */}
+            <h2 className="font-display font-normal uppercase text-[1.8rem] md:text-[2.4rem] lg:text-[2.9rem] text-navy tracking-normal leading-tight mt-2">
+              {t.sponsors.title}
+            </h2>
             <div className="section-rule mx-auto" />
           </div>
 
@@ -881,9 +888,14 @@ function Index() {
       <section id="services" className="py-24 px-6 md:px-[8%] bg-light-grey">
         <div className="max-w-6xl mx-auto">
           <div className="reveal">
-            {/* ── CHANGED: "What We Do" kicker — larger, bolder ── */}
-            <p className="text-orange font-display font-bold tracking-[2px] uppercase text-base md:text-lg">{t.services.kicker}</p>
-            <h2 className="mt-4 font-display font-extrabold text-4xl md:text-5xl lg:text-6xl text-navy uppercase">{t.services.title}</h2>
+            {/* Kicker: Large Orange */}
+            <p className="text-orange mt-4 font-display font-extrabold text-4xl md:text-5xl lg:text-6xl uppercase leading-none">
+              {t.services.kicker}
+            </p>
+            {/* Title: Small Navy */}
+            <h2 className="font-display font-normal uppercase text-[1.8rem] md:text-[2.4rem] lg:text-[2.9rem] text-navy tracking-normal leading-tight mt-2">
+              {t.services.title}
+            </h2>
             <div className="section-rule" />
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
@@ -902,9 +914,14 @@ function Index() {
       <section id="projects" className="py-24 px-6 md:px-[8%] bg-navy-dark">
         <div className="max-w-6xl mx-auto">
           <div className="reveal">
-            {/* ── CHANGED: "Our Work" kicker — larger, bolder ── */}
-            <p className="text-orange font-display font-bold tracking-[2px] uppercase text-base md:text-lg">{t.projectsSec.kicker}</p>
-            <h2 className="mt-4 font-display font-extrabold text-4xl md:text-5xl lg:text-6xl text-white uppercase">{t.projectsSec.title}</h2>
+            {/* Kicker: Large Orange */}
+            <p className="text-orange mt-4 font-display font-extrabold text-4xl md:text-5xl lg:text-6xl uppercase leading-none">
+              {t.projectsSec.kicker}
+            </p>
+            {/* Title: Small White */}
+            <h2 className="font-display font-normal uppercase text-[1.8rem] md:text-[2.4rem] lg:text-[2.9rem] text-white tracking-normal leading-tight mt-2">
+              {t.projectsSec.title}
+            </h2>
             <div className="section-rule" />
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
@@ -980,9 +997,14 @@ function Index() {
       <section id="why" className="py-24 px-6 md:px-[8%] bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="reveal">
-            {/* ── CHANGED: "Our Difference / Why TLG" kicker — larger, bolder ── */}
-            <p className="text-orange font-display font-bold tracking-[2px] uppercase text-base md:text-lg">{t.why.kicker}</p>
-            <h2 className="mt-4 font-display font-extrabold text-4xl md:text-5xl lg:text-6xl text-navy uppercase">{t.why.title}</h2>
+            {/* Kicker: Large Orange */}
+            <p className="text-orange mt-4 font-display font-extrabold text-4xl md:text-5xl lg:text-6xl uppercase leading-none">
+              {t.why.kicker}
+            </p>
+            {/* Title: Small Navy */}
+            <h2 className="font-display font-normal uppercase text-[1.8rem] md:text-[2.4rem] lg:text-[2.9rem] text-navy tracking-normal leading-tight mt-2">
+              {t.why.title}
+            </h2>
             <div className="section-rule" />
           </div>
           <div className="grid md:grid-cols-2 gap-10 mt-10">
@@ -1004,9 +1026,14 @@ function Index() {
         <div className="absolute inset-0 blueprint-grid opacity-40" />
         <div className="max-w-6xl mx-auto relative">
           <div className="reveal">
-            {/* ── CHANGED: contact kicker larger ── */}
-            <p className="text-orange font-display font-bold tracking-[2px] uppercase text-base md:text-lg">{t.contact.kicker}</p>
-            <h2 className="mt-4 font-display font-extrabold text-4xl md:text-5xl lg:text-6xl text-white uppercase">{t.contact.title}</h2>
+            {/* Kicker: Large Orange */}
+            <p className="text-orange mt-4 font-display font-extrabold text-4xl md:text-5xl lg:text-6xl uppercase leading-none">
+              {t.contact.kicker}
+            </p>
+            {/* Title: Small White */}
+            <h2 className="font-display font-normal uppercase text-[1.8rem] md:text-[2.4rem] lg:text-[2.9rem] text-white tracking-normal leading-tight mt-2">
+              {t.contact.title}
+            </h2>
             <div className="section-rule" />
           </div>
           <div className="grid md:grid-cols-2 gap-12 mt-10">
