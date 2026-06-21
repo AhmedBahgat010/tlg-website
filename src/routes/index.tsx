@@ -42,7 +42,7 @@ const dict = {
   en: {
     nav: { about: "About", services: "Services", projects: "Projects", why: "Why TLG", contact: "Contact Us" },
     hero: {
-      tag: "Tong Long Group — Construction Engineering · Egypt",
+      tag: "Tong Long Group Construction Engineering · Egypt",
       l1: "Building", l2: "Egypt's", l3: "Future",
       desc: "Over two decades of engineering excellence — delivering large-scale infrastructure, commercial, and residential projects across Egypt with precision and integrity.",
       cta1: "View Our Projects →", cta2: "Get a Quote",
@@ -82,7 +82,7 @@ const dict = {
   ar: {
     nav: { about: "من نحن", services: "خدماتنا", projects: "مشاريعنا", why: "لماذا TLG", contact: "تواصل معنا" },
     hero: {
-      tag: "مجموعة تونغ لونغ — هندسة الإنشاءات · مصر",
+      tag: "مجموعة تونغ لونغ هندسة الإنشاءات · مصر",
       l1: "نبني", l2: "مستقبل", l3: "مصر",
       desc: "أكثر من عقدين من التميز الهندسي — ننفذ مشاريع البنية التحتية والتجارية والسكنية الكبرى في جميع أنحاء مصر بدقة ونزاهة.",
       cta1: "شاهد مشاريعنا ←", cta2: "اطلب عرض سعر",
@@ -122,7 +122,7 @@ const dict = {
   zh: {
     nav: { about: "关于我们", services: "服务", projects: "项目", why: "为何选 TLG", contact: "联系我们" },
     hero: {
-      tag: "通隆集团 — 建筑工程 · 埃及",
+      tag: "通隆集团 建筑工程 · 埃及",
       l1: "建设", l2: "埃及的", l3: "未来",
       desc: "二十多年工程卓越成就 — 以精准与诚信在埃及交付大型基础设施、商业及住宅项目。",
       cta1: "查看项目 →", cta2: "获取报价",
