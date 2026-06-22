@@ -588,7 +588,7 @@ const sponsorLogos = [
   "/projects/Sponsors/regenco-glass-mirror-manufacturer-v1.jpg",
   "/projects/Sponsors/screenshot-20251110-130842.png",
   "/projects/Sponsors/screenshot-20251110-133040.png",
-  "/projects/Sponsors/.jpg"
+  "/projects/Sponsors/WhatsApp Image 2026-06-19 at 11.05.25.jpg"
 ];
 
 function SponsorsMarquee() {
